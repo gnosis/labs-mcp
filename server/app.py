@@ -6,7 +6,7 @@ from prediction_market_agent_tooling.markets.data_models import ProbabilisticAns
 nest_asyncio.apply()  # Required for pydantic AI to work inside MCP (https://ai.pydantic.dev/troubleshooting/#runtimeerror-this-event-loop-is-already-running)
 from mcp.server.fastmcp.server import FastMCP
 from prediction_market_agent.agents.prophet_agent.deploy import (
-    DeployablePredictionProphetGPT4ominiAgent,  # type: ignore
+    DeployablePredictionProphetGPT4ominiAgent,
 )
 from prediction_market_agent_tooling.markets.agent_market import (
     AgentMarket,
