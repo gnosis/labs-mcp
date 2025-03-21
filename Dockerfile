@@ -1,6 +1,4 @@
-# Install uv
-#FROM --platform=linux/amd64 python:3.10.14-bookworm AS builder
-#COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+# pre-commit: ignore detect-web3-private-key
 FROM ghcr.io/astral-sh/uv:0.6.9-python3.10-bookworm@sha256:f4f319fff1ed098c4a195cdecd372e78cb97d0066faf3318fba4edfd1c7d522e as builder
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
 ENV UV_PYTHON_DOWNLOADS=0
