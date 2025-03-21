@@ -1,4 +1,3 @@
-from unittest.mock import Mock
 
 import nest_asyncio
 from prediction_market_agent_tooling.markets.data_models import ProbabilisticAnswer
@@ -8,11 +7,7 @@ from mcp.server.fastmcp.server import FastMCP
 from prediction_market_agent.agents.prophet_agent.deploy import (
     DeployablePredictionProphetGPT4ominiAgent,
 )
-from prediction_market_agent_tooling.markets.agent_market import (
-    AgentMarket,
-    FilterBy,
-    SortBy,
-)
+from prediction_market_agent_tooling.markets.agent_market import FilterBy, SortBy
 from prediction_market_agent_tooling.markets.omen.data_models import OmenMarket
 from prediction_market_agent_tooling.markets.omen.omen_subgraph_handler import (
     OmenSubgraphHandler,
