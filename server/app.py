@@ -45,9 +45,5 @@ def answer_binary_question(question: str) -> ProbabilisticAnswer | None:
     # We could make this agent selectable via argument, similar to what we do on PMA's `run_agent`.
     # We select gpt-4o-mini for cost-efficiency.
     agent = DeployablePredictionProphetGPT4ominiAgent()
-    mock_market = Mock(spec=AgentMarket)
-    mock_market.question = question
-    probabilistic_answer: ProbabilisticAnswer | None = agent.answer_binary_market(
-        mock_market
-    )
+    probabilistic_answer: ProbabilisticAnswer | None = agent.agent.predict(question).outcome_prediction
     return probabilistic_answer
