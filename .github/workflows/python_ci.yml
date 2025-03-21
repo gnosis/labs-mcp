@@ -11,6 +11,7 @@ jobs:
   mypy:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/python_prepare
       - name: Run mypy
         run: uv run mypy
@@ -25,6 +26,7 @@ jobs:
             command: 'uv run python -m pytest tests/ -vvv'
     name: pytest - ${{ matrix.test.name }}
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/python_prepare
       - name: Run Tests - ${{ matrix.test.name }}
         run: ${{ matrix.test.command }}
@@ -32,6 +34,7 @@ jobs:
   black:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/python_prepare
       - name: Check with black
         run: uv run black --check .
@@ -39,6 +42,7 @@ jobs:
   autoflake:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/python_prepare
       - name: Check with autoflake
         run: |
@@ -48,6 +52,7 @@ jobs:
   isort:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/python_prepare
       - name: Check with isort
         run: |
@@ -57,5 +62,6 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/python_prepare
       - uses: pre-commit/action@v3.0.1
