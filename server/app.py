@@ -1,4 +1,3 @@
-
 import nest_asyncio
 from prediction_market_agent_tooling.markets.data_models import ProbabilisticAnswer
 
@@ -40,5 +39,7 @@ def answer_binary_question(question: str) -> ProbabilisticAnswer | None:
     # We could make this agent selectable via argument, similar to what we do on PMA's `run_agent`.
     # We select gpt-4o-mini for cost-efficiency.
     agent = DeployablePredictionProphetGPT4ominiAgent()
-    probabilistic_answer: ProbabilisticAnswer | None = agent.agent.predict(question).outcome_prediction
+    probabilistic_answer: ProbabilisticAnswer | None = agent.agent.predict(
+        question
+    ).outcome_prediction
     return probabilistic_answer
