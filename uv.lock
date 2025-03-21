@@ -1,6 +1,6 @@
 version = 1
 revision = 1
-requires-python = ">=3.10"
+requires-python = ">=3.10, <4"
 resolution-markers = [
     "python_full_version >= '3.13' and sys_platform == 'darwin'",
     "python_full_version >= '3.13' and platform_machine == 'aarch64' and sys_platform == 'linux'",
@@ -4744,7 +4744,7 @@ dependencies = [
     { name = "pinecone-plugin-interface" },
     { name = "tqdm" },
     { name = "typing-extensions" },
-    { name = "urllib3", marker = "python_full_version < '4.0'" },
+    { name = "urllib3" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/98/a4/739fe0a4a173658d541206ec7fdb0cc4c9ddc364de216af668b988bf0868/pinecone_client-5.0.1.tar.gz", hash = "sha256:11c33ff5d1c38a6ce69e69fe532c0f22f312fb28d761bb30b3767816d3181d64", size = 122207 }
 wheels = [
@@ -7960,7 +7960,7 @@ name = "xattr"
 version = "1.1.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "sys_platform == 'darwin'" },
+    { name = "cffi" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/62/bf/8b98081f9f8fd56d67b9478ff1e0f8c337cde08bcb92f0d592f0a7958983/xattr-1.1.4.tar.gz", hash = "sha256:b7b02ecb2270da5b7e7deaeea8f8b528c17368401c2b9d5f63e91f545b45d372", size = 16729 }
 wheels = [

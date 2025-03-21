@@ -2,7 +2,7 @@
 name = "labs-mcp"
 version = "0.1.0"
 description = "Add your description here"
-requires-python = ">=3.10"
+requires-python = "~=3.10"
 dependencies = [
     "prediction-market-agent",
       "mcp[cli]>=1.4.1",
