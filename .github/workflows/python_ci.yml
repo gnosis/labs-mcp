@@ -1,0 +1,96 @@
+name: Python CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  GRAPH_API_KEY: ${{ secrets.GRAPH_API_KEY }}
+  PINECONE_API_KEY: ${{ secrets.PINECONE_API_KEY }}
+  TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+
+jobs:
+  mypy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/python_prepare
+      - name: Run mypy
+        run: uv run mypy
+
+  pytest:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        test:
+          - name: Unit Tests
+            command: 'uv run python -m pytest tests/ -vvv'
+    name: pytest - ${{ matrix.test.name }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/python_prepare
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+      - name: Run Tests - ${{ matrix.test.name }}
+        run: ${{ matrix.test.command }}
+
+
+  pytest-paid:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/python_prepare
+      - name: Run pytest
+        run: poetry run pytest tests
+        env:
+          RUN_PAID_TESTS: "1"
+    if: github.event_name == 'workflow_dispatch'
+
+  test-build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Build and push Docker image
+        uses: docker/build-push-action@4a13e500e55cf31b7a5d59a38ab2040ab0f42f56
+        with:
+          push: false
+
+  black:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/python_prepare
+      - name: Check with black
+        run: uv run black --check .
+
+  autoflake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/python_prepare
+      - name: Check with autoflake
+        run: |
+          uv run autoflake --in-place --remove-all-unused-imports --remove-unused-variables --recursive .
+          git diff --exit-code --quiet || exit 1
+
+  isort:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/python_prepare
+      - name: Check with isort
+        run: |
+          uv run isort --profile black .
+          git diff --exit-code --quiet || exit 1
+
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/python_prepare
+      - uses: pre-commit/action@v3.0.1
