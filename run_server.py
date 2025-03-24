@@ -1,4 +1,4 @@
-from server.app import mcp
+from app import mcp
 
 
 def main() -> None:
