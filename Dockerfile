@@ -12,7 +12,10 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-install-project --no-dev
 
 # Copy the project into the intermediate image
-COPY . /app
+COPY pyproject.toml pyproject.toml
+COPY uv.lock uv.lock
+COPY run_server.py /app/run_server.py
+COPY app.py /app/app.py
 
 # Sync the project
 RUN --mount=type=cache,target=/root/.cache/uv \
