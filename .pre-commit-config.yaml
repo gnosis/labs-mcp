@@ -9,5 +9,4 @@
         exclude: |
           (?x)(
               uv.lock|
-              Dockerfile
           )
