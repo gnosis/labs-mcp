@@ -1,5 +1,7 @@
 # Docker specific ignores:
 .git
+.github
+tests/
 
 # .gitignore ignores:
 .env
