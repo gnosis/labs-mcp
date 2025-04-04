@@ -6,6 +6,8 @@ on:
     branches: [main]
   workflow_dispatch:
 
+env:
+  GRAPH_API_KEY: ${{ secrets.GRAPH_API_KEY }}
 
 jobs:
   mypy:

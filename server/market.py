@@ -28,7 +28,7 @@ class MarketFetcher:
             return IPFSAgentResult(**r.json())
         except httpx.HTTPError as e:
             logger.warning(
-                f"Failed to fetch IPFS content from gateway.ipfs.io for CID {ipfs_cid}, error {e}"
+                f"Failed to fetch IPFS content from ipfs.io for CID {ipfs_cid}, error {e}"
             )
             return None
 
