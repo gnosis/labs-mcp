@@ -14,8 +14,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 # Copy the project into the intermediate image
 COPY pyproject.toml pyproject.toml
 COPY uv.lock uv.lock
-COPY run_server.py /app/run_server.py
-COPY app.py /app/app.py
+COPY server /app/server
 
 # Sync the project
 RUN --mount=type=cache,target=/root/.cache/uv \
@@ -26,11 +25,11 @@ FROM --platform=linux/amd64 python:3.10.14-bookworm AS runtime
 
 
 # Copy the environment, but not the source code
-#COPY --from=builder --chown=app:app /app/.venv /app/.venv
 COPY --from=builder --chown=app:app /app /app
 
 # Place executables in the environment at the front of the path
 ENV PATH="/app/.venv/bin:$PATH"
+ENV PYTHONPATH="/app"
 
 # Run the application
-CMD ["python","/app/run_server.py"]
+CMD ["python", "/app/server/run_server.py"]

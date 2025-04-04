@@ -1,6 +1,6 @@
 import pytest
 
-from app import answer_binary_question
+from server.app import answer_binary_question
 
 
 @pytest.mark.skip("Deactivated to avoid wasting OpenAI credits")
