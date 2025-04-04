@@ -25,7 +25,7 @@ jobs:
           - name: Unit Tests
             command: 'uv run python -m pytest tests/ -vvv'
           - name: Integration Tests
-            command: 'poetry run python -m pytest tests_integration/ -vvv'
+            command: 'uv run python -m pytest tests_integration/ -vvv'
     name: pytest - ${{ matrix.test.name }}
     steps:
       - uses: actions/checkout@v4
