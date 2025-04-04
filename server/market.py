@@ -1,4 +1,7 @@
+import asyncio
+
 import httpx
+from httpx import AsyncClient
 from prediction_market_agent_tooling.gtypes import HexAddress, IPFSCIDVersion0
 from prediction_market_agent_tooling.loggers import logger
 from prediction_market_agent_tooling.markets.omen.data_models import (
@@ -8,7 +11,6 @@ from prediction_market_agent_tooling.markets.omen.data_models import (
 from prediction_market_agent_tooling.markets.omen.omen_subgraph_handler import (
     OmenSubgraphHandler,
 )
-from prediction_market_agent_tooling.tools.parallelism import par_map
 from prediction_market_agent_tooling.tools.web3_utils import byte32_to_ipfscidv0
 
 
@@ -21,9 +23,11 @@ class MarketFetcher:
         self.subgraph_handler = OmenSubgraphHandler()
 
     @staticmethod
-    def fetch_ipfs_content(ipfs_cid: IPFSCIDVersion0) -> IPFSAgentResult | None:
+    async def fetch_ipfs_content(
+        ipfs_cid: IPFSCIDVersion0, client: AsyncClient
+    ) -> IPFSAgentResult | None:
         try:
-            r = httpx.get(f"https://ipfs.io/ipfs/{ipfs_cid}")
+            r = await client.get(f"https://ipfs.io/ipfs/{ipfs_cid}")
             r.raise_for_status()
             return IPFSAgentResult(**r.json())
         except httpx.HTTPError as e:
@@ -32,7 +36,7 @@ class MarketFetcher:
             )
             return None
 
-    def fetch_predictions(self, market_id: HexAddress) -> list[MarketPrediction]:
+    async def fetch_predictions(self, market_id: HexAddress) -> list[MarketPrediction]:
         contract_predictions = self.subgraph_handler.get_agent_results_for_market(
             market_id=market_id
         )
@@ -43,7 +47,11 @@ class MarketFetcher:
         ]
 
         # Fetch IPFS contents in parallel
-        ipfs_contents = par_map(ipfs_cids, self.fetch_ipfs_content)
+        async with httpx.AsyncClient() as client:
+            ipfs_contents = await asyncio.gather(
+                *[self.fetch_ipfs_content(cid, client) for cid in ipfs_cids]
+            )
+
         # Merge contract and IPFS data
         market_predictions = []
         for contract_pred, ipfs_content in zip(contract_predictions, ipfs_contents):
