@@ -29,9 +29,12 @@ def fetch_open_omen_markets(limit: int = 1) -> list[OmenMarket]:
 
 
 @mcp.tool()
-def fetch_predictions_by_market_id(market_id: str) -> list[MarketPrediction]:
+async def fetch_predictions_by_market_id(market_id: str) -> list[MarketPrediction]:
     """Fetches predictions from multiple agents for a specific market ID"""
-    return MarketFetcher().fetch_predictions(market_id=HexAddress(HexStr(market_id)))
+    predictions = await MarketFetcher().fetch_predictions(
+        market_id=HexAddress(HexStr(market_id))
+    )
+    return predictions
 
 
 @mcp.tool()
