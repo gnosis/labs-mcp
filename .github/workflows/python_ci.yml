@@ -6,6 +6,8 @@ on:
     branches: [main]
   workflow_dispatch:
 
+env:
+  GRAPH_API_KEY: ${{ secrets.GRAPH_API_KEY }}
 
 jobs:
   mypy:
@@ -24,6 +26,8 @@ jobs:
         test:
           - name: Unit Tests
             command: 'uv run python -m pytest tests/ -vvv'
+          - name: Integration Tests
+            command: 'uv run python -m pytest tests_integration/ -vvv'
     name: pytest - ${{ matrix.test.name }}
     steps:
       - uses: actions/checkout@v4

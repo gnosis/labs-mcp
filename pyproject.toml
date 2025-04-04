@@ -1,6 +1,6 @@
 [project]
 name = "labs-mcp"
-version = "0.1.0"
+version = "0.1.1"
 description = "Gnosis AI's MCP server"
 requires-python = "~=3.10"
 dependencies = [
@@ -8,14 +8,13 @@ dependencies = [
       "mcp[cli]>=1.4.1",
 ]
 
-
-
 [tool.uv.sources]
 prediction-market-agent = { git = "https://github.com/gnosis/prediction-market-agent" }
 
 [dependency-groups]
 dev = [
     "black>=23.12.1",
+    "pre-commit>=4.2.0",
     "pytest>=8.3.5",
 ]
 

@@ -3,6 +3,9 @@
 .github
 tests/
 
+server/*
+!server/**/*.py
+
 # .gitignore ignores:
 .env
 .env.monitor
