@@ -1,5 +1,6 @@
+from prediction_market_agent_tooling.gtypes import HexAddress, HexStr
+
 from server.app import fetch_predictions_by_market_id
-from prediction_market_agent_tooling.gtypes import HexStr, HexAddress
 
 
 def test_market_predictions() -> None:
