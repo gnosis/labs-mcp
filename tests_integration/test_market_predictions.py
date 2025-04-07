@@ -1,7 +1,7 @@
 import pytest
 from prediction_market_agent_tooling.gtypes import HexAddress, HexStr
 
-from server.app import fetch_predictions_by_market_id
+from server.run_server import fetch_predictions_by_market_id
 
 
 @pytest.mark.asyncio

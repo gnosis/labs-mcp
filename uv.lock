@@ -1707,6 +1707,28 @@ wheels = [
 ]
 
 [[package]]
+name = "fastapi-mcp"
+version = "0.1.7"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "fastapi" },
+    { name = "httpx" },
+    { name = "inspect-mate" },
+    { name = "mcp" },
+    { name = "pydantic" },
+    { name = "pydantic-settings" },
+    { name = "requests" },
+    { name = "rich" },
+    { name = "tomli" },
+    { name = "typer" },
+    { name = "uvicorn" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/fd/bc/42baa5847c78e976b88e7f82081da413be288758ccc39217c0c515b23a33/fastapi_mcp-0.1.7.tar.gz", hash = "sha256:34036f0e4732f54bfaf476cf8bbbb9d8834efc24d50a878b5a72f3406f769824", size = 58723 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5b/6e/b3acb467c1d71ef11ac2b13717819ddad1ff730c7611e6a0150794ec2661/fastapi_mcp-0.1.7-py3-none-any.whl", hash = "sha256:44ab9e9d79ff621df30212a3f65cb92dbbad3843c94a0cda825ebe6918c2cd54", size = 15331 },
+]
+
+[[package]]
 name = "fastavro"
 version = "1.10.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2710,6 +2732,12 @@ wheels = [
 ]
 
 [[package]]
+name = "inspect-mate"
+version = "0.0.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/3d/0e/75bcfbb04eb18002ac864014b3a88a0615a3b90e3f3aa9cb9067503906bd/inspect_mate-0.0.2.tar.gz", hash = "sha256:a51907976d9624d0eeaf0d2207a67c95d174a2fa3aabfdaee53eeaf91d973bdd", size = 13433 }
+
+[[package]]
 name = "installer"
 version = "0.7.0"
 source = { registry = "https://pypi.org/simple" }
@@ -3047,7 +3075,7 @@ name = "labs-mcp"
 version = "0.1.1"
 source = { virtual = "." }
 dependencies = [
-    { name = "mcp", extra = ["cli"] },
+    { name = "fastapi-mcp" },
     { name = "prediction-market-agent" },
 ]
 
@@ -3061,7 +3089,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "mcp", extras = ["cli"], specifier = ">=1.4.1" },
+    { name = "fastapi-mcp", specifier = ">=0.1.7" },
     { name = "prediction-market-agent", git = "https://github.com/gnosis/prediction-market-agent" },
 ]
 
@@ -3715,12 +3743,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/50/cc/5c5bb19f1a0f8f89a95e25cb608b0b07009e81fd4b031e519335404e1422/mcp-1.4.1.tar.gz", hash = "sha256:b9655d2de6313f9d55a7d1df62b3c3fe27a530100cc85bf23729145b0dba4c7a", size = 154942 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e8/0e/885f156ade60108e67bf044fada5269da68e29d758a10b0c513f4d85dd76/mcp-1.4.1-py3-none-any.whl", hash = "sha256:a7716b1ec1c054e76f49806f7d96113b99fc1166fc9244c2c6f19867cb75b593", size = 72448 },
-]
-
-[package.optional-dependencies]
-cli = [
-    { name = "python-dotenv" },
-    { name = "typer" },
 ]
 
 [[package]]
