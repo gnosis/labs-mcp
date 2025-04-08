@@ -12,10 +12,12 @@ from prediction_market_agent_tooling.markets.omen.omen_subgraph_handler import (
     OmenSubgraphHandler,
 )
 from prediction_market_agent_tooling.tools.web3_utils import byte32_to_ipfscidv0
+from pydantic import BaseModel
 
 
-class MarketPrediction(ContractPrediction, IPFSAgentResult):
-    pass
+class MarketPrediction(BaseModel):
+    prediction: ContractPrediction
+    agent_result: IPFSAgentResult
 
 
 class MarketFetcher:
@@ -52,18 +54,11 @@ class MarketFetcher:
                 *[self.fetch_ipfs_content(cid, client) for cid in ipfs_cids]
             )
 
-        # Merge contract and IPFS data
-        market_predictions = []
-        for contract_pred, ipfs_content in zip(contract_predictions, ipfs_contents):
-            if ipfs_content is None:
-                continue
-
-            # Combine data from both sources
-            prediction_data = {
-                **contract_pred.model_dump(exclude={"publisher_checksummed"}),
-                **ipfs_content.model_dump(),
-            }
-
-            market_predictions.append(MarketPrediction(**prediction_data))
+        # Create MarketPrediction objects from valid pairs
+        market_predictions = [
+            MarketPrediction(prediction=pred, agent_result=result)
+            for pred, result in zip(contract_predictions, ipfs_contents)
+            if result is not None
+        ]
 
         return market_predictions
